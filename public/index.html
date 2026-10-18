@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111814">
+<meta name="description" content="A clean dashboard for testing Safaricom Daraja sandbox APIs.">
+<title>Daraja Lab — Sandbox Console</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar glass">
+    <a class="brand" href="#" aria-label="Daraja Lab home">
+      <span class="brand-mark">D</span><span><strong>Daraja Lab</strong><small>DEVELOPER CONSOLE</small></span>
+    </a>
+    <div class="env"><span class="pulse"></span> SANDBOX ENVIRONMENT</div>
+    <nav aria-label="Main navigation">
+      <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+      <button class="nav-item" data-view="stk"><span>↗</span> STK Push</button>
+      <button class="nav-item" data-view="connection"><span>⌘</span> Connection test</button>
+      <button class="nav-item" data-view="history"><span>≡</span> Request history</button>
+    </nav>
+    <div class="side-note">
+      <span class="mini-label">ENVIRONMENT</span>
+      <strong>Safaricom Daraja</strong>
+      <p>Sandbox requests only. No real money should move through this workspace.</p>
+      <a href="https://developer.safaricom.co.ke/" target="_blank" rel="noreferrer">Open Daraja portal ↗</a>
+    </div>
+    <div class="side-footer">DAR AJA LAB <span>•</span> v1.0</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="mobile-brand"><span class="brand-mark">D</span><strong>Daraja Lab</strong></div>
+      <div class="crumb">Workspace <span>/</span> <b id="crumb-title">Overview</b></div>
+      <div class="top-actions">
+        <span class="sandbox-chip"><i></i> Sandbox</span>
+        <button class="icon-button" id="theme-toggle" aria-label="Toggle light and dark theme" title="Toggle theme">◐</button>
+      </div>
+    </header>
+
+    <section class="page active" id="view-overview">
+      <div class="hero">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> DEVELOPER WORKSPACE</div>
+          <h1>Test integrations.<br><span>Build with confidence.</span></h1>
+          <p class="hero-copy">A focused workspace for exploring Safaricom Daraja sandbox requests and inspecting API responses.</p>
+          <div class="hero-actions">
+            <button class="button primary" data-goto="stk">Start an STK test <span>↗</span></button>
+            <button class="button secondary" data-goto="connection">Test connection</button>
+          </div>
+        </div>
+        <div class="hero-orb" aria-hidden="true"><div class="orb-ring ring-one"></div><div class="orb-ring ring-two"></div><div class="orb-core">D</div><span class="orb-caption">API WORKSPACE</span></div>
+      </div>
+
+      <div class="section-heading"><div><h2>Workspace overview</h2><p>Your sandbox tools, in one place.</p></div><span class="updated-label"><i></i> Ready to test</span></div>
+      <div class="metric-grid">
+        <article class="metric glass"><div class="metric-top"><span>API environment</span><span class="metric-icon">⌘</span></div><strong>Sandbox</strong><small>Isolated test environment</small></article>
+        <article class="metric glass"><div class="metric-top"><span>Requests this session</span><span class="metric-icon">↗</span></div><strong id="request-count">0</strong><small>Saved in this browser</small></article>
+        <article class="metric glass"><div class="metric-top"><span>Latest response</span><span class="metric-icon">◷</span></div><strong id="latest-status">No requests</strong><small id="latest-time">Run a connection test to begin</small></article>
+      </div>
+
+      <div class="section-heading compact"><div><h2>Testing tools</h2><p>Choose a task to get started.</p></div></div>
+      <div class="tool-grid">
+        <button class="tool-card glass" data-goto="stk"><span class="tool-icon">↗</span><span class="tool-title">STK Push</span><span class="tool-desc">Send a sandbox Lipa na M-Pesa Online request.</span><span class="tool-link">Open tool <b>→</b></span></button>
+        <button class="tool-card glass" data-goto="connection"><span class="tool-icon">⌘</span><span class="tool-title">Connection test</span><span class="tool-desc">Check credentials and request an OAuth access token.</span><span class="tool-link">Open tool <b>→</b></span></button>
+        <button class="tool-card glass" data-goto="history"><span class="tool-icon">≡</span><span class="tool-title">Request history</span><span class="tool-desc">Review responses saved in this browser.</span><span class="tool-link">Open tool <b>→</b></span></button>
+      </div>
+      <div class="notice"><span class="notice-icon">i</span><div><strong>Sandbox safety</strong><p>Use your Daraja sandbox app credentials and sandbox test data only. Never place consumer secrets or passkeys in frontend code.</p></div></div>
+    </section>
+
+    <section class="page" id="view-stk">
+      <div class="page-heading"><div class="eyebrow"><span class="eyebrow-line"></span> API TOOL</div><h1>STK Push</h1><p>Initiate a sandbox Lipa na M-Pesa Online request.</p></div>
+      <div class="work-grid">
+        <form class="panel glass form-panel" id="stk-form">
+          <div class="panel-heading"><div><h2>Request configuration</h2><p>Fields sent to the server-side function.</p></div><span class="method-pill">POST</span></div>
+          <label for="phone">Test phone number</label>
+          <div class="input-wrap"><span>+254</span><input id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="712345678" required maxlength="12"></div>
+          <small class="field-help">Enter a Kenyan number. The request is sent to the sandbox only.</small>
+          <label for="amount">Amount (KES)</label>
+          <input id="amount" name="amount" type="number" min="1" max="150000" step="1" placeholder="1" required>
+          <label for="account-reference">Account reference</label>
+          <input id="account-reference" name="accountReference" maxlength="12" value="DARajaLab" required>
+          <label for="description">Transaction description</label>
+          <input id="description" name="transactionDesc" maxlength="13" value="Sandbox test" required>
+          <button class="button primary full" type="submit" id="stk-submit">Send sandbox STK request <span>↗</span></button>
+          <p class="form-footnote">This sends a real API request to the sandbox. Only use test numbers approved for your Daraja app.</p>
+        </form>
+        <div class="panel glass response-panel">
+          <div class="panel-heading"><div><h2>API response</h2><p>Safaricom response will appear here.</p></div><span class="live-dot">LIVE</span></div>
+          <div class="response-placeholder" id="stk-placeholder"><div class="response-symbol">{ }</div><strong>Waiting for a request</strong><p>Submit the form to inspect the response payload.</p></div>
+          <pre class="json-output hidden" id="stk-response" aria-live="polite"></pre>
+          <div class="response-actions"><span id="stk-status" class="status-text">No request sent</span><button class="text-button" id="copy-stk" disabled>Copy JSON</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="view-connection">
+      <div class="page-heading"><div class="eyebrow"><span class="eyebrow-line"></span> DIAGNOSTICS</div><h1>Connection test</h1><p>Request a sandbox OAuth access token without exposing credentials to the browser.</p></div>
+      <div class="work-grid">
+        <div class="panel glass form-panel">
+          <div class="panel-heading"><div><h2>Credential check</h2><p>Credentials are read from Cloudflare secrets.</p></div><span class="method-pill">OAUTH</span></div>
+          <div class="credential-row"><span class="credential-icon">✓</span><div><strong>Consumer Key</strong><small>DARAJA_CONSUMER_KEY</small></div><span class="configured" id="key-config">Server-side</span></div>
+          <div class="credential-row"><span class="credential-icon">✓</span><div><strong>Consumer Secret</strong><small>DARAJA_CONSUMER_SECRET</small></div><span class="configured">Server-side</span></div>
+          <div class="credential-row"><span class="credential-icon">✓</span><div><strong>Sandbox endpoint</strong><small>sandbox.safaricom.co.ke</small></div><span class="configured">Configured</span></div>
+          <button class="button primary full" id="token-test">Request access token <span>↗</span></button>
+          <p class="form-footnote">The token is displayed only in the response panel for debugging. Do not share it.</p>
+        </div>
+        <div class="panel glass response-panel">
+          <div class="panel-heading"><div><h2>Connection response</h2><p>OAuth endpoint result.</p></div><span class="live-dot">LIVE</span></div>
+          <div class="response-placeholder" id="token-placeholder"><div class="response-symbol">⌘</div><strong>Ready to check connection</strong><p>Run the test to verify the configured credentials.</p></div>
+          <pre class="json-output hidden" id="token-response" aria-live="polite"></pre>
+          <div class="response-actions"><span id="token-status" class="status-text">No request sent</span><button class="text-button" id="copy-token" disabled>Copy JSON</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="view-history">
+      <div class="page-heading"><div class="eyebrow"><span class="eyebrow-line"></span> ACTIVITY</div><h1>Request history</h1><p>Requests saved locally in this browser on this device.</p></div>
+      <div class="panel glass history-panel">
+        <div class="panel-heading"><div><h2>Recent requests</h2><p>History is not synced between devices.</p></div><button class="text-button danger" id="clear-history">Clear history</button></div>
+        <div id="history-list" class="history-list"><div class="empty-history"><div class="response-symbol">≡</div><strong>No requests yet</strong><p>Your recent API tests will appear here.</p></div></div>
+      </div>
+    </section>
+    <footer class="footer"><span>Daraja Lab</span><span>Independent sandbox utility · Not an official Safaricom product</span></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/app.js"></script>
+</body>
+</html>
